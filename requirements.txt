@@ -93,7 +93,7 @@ protobuf
 pyannote.core
 pyasn1
 pyasn1_modules
-PyAudio
+PyAudio==0.2.14
 pycparser
 pydantic
 pydantic_core
