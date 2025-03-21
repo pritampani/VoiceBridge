@@ -103,7 +103,7 @@ def download_youtube_video(URL, output_folder=None):
         return None
 
 def extract_audio(video_path, audio_path, progress_callback):
-    ffmpeg_path = r"C:\Users\HP\Downloads\FlaskUI\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+    ffmpeg_path = "ffmpeg.exe"
     
     if not os.path.exists(ffmpeg_path):
         raise FileNotFoundError(f"FFmpeg not found at {ffmpeg_path}")
@@ -195,7 +195,7 @@ def translate_text(text, target_language):
 
 def embed_subtitles(video_path, subtitle_file_path, output_path):
     try:
-        ffmpeg_path = r"C:\Users\HP\Downloads\FlaskUI\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+        ffmpeg_path = "ffmpeg.exe"
         
         # Normalize the subtitle path to use forward slashes
         normalized_path = os.path.normpath(subtitle_file_path)
@@ -306,7 +306,7 @@ def text_to_speech(text, output_file, language_code):
         raise
 
 def tune_audio(input_file, output_file, pitch_factor=1.0, tempo_factor=1.0):
-    ffmpeg_path = r"C:\Users\HP\Downloads\FlaskUI\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+    ffmpeg_path = "ffmpeg.exe"
     command = [
         ffmpeg_path,
         '-i', input_file,
@@ -321,7 +321,7 @@ def tune_audio(input_file, output_file, pitch_factor=1.0, tempo_factor=1.0):
         raise
 
 def replace_audio_in_video(video_with_subtitles, speech_path, final_output_path):
-    ffmpeg_path = r"C:\Users\HP\Downloads\FlaskUI\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+    ffmpeg_path = "ffmpeg.exe"
     
     command = [
         ffmpeg_path,
