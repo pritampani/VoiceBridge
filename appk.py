@@ -475,7 +475,7 @@ def uploaded_file(filename):
         return jsonify({"error": "File not found"}), 404
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    #app.run(debug=False)
     # Use Render's dynamically assigned port
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port, debug=True)
