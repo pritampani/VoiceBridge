@@ -871,50 +871,52 @@
         processingStep.textContent = "Starting video processing...";
         setupProgressTracking();
     
-        fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({
-            "youtube_url": youtubeUrl,
-            "video_language": videoLanguage,
-            "subtitle_language": subtitleLanguage
-          })
-        })
-        .then(response => {
-          console.log("Raw response status:", response.status);
-          return response.text();  // get raw text
-        })
-        .then(text => {
-          console.log("Raw response text:", text);
-          // Try to parse JSON manually
-          try {
-            const data = JSON.parse(text);
-            console.log("✅ Parsed Response:", data);
-            if (data.error) {
-              showError(data.error);
-            } else {
-              processingStep.textContent = "✅ Video processed successfully!";
-              // Update the page with the returned data
-              document.getElementById("originalVideo").querySelector("source").src = data.original_video_url;
-              document.getElementById("originalVideo").load();
-              document.getElementById("translatedVideo").querySelector("source").src = data.translated_video_url;
-              document.getElementById("translatedVideo").load();
-              document.getElementById("originalVideo").style.display = "block";
-              document.getElementById("translatedVideo").style.display = "block";
-              document.getElementById("downloadLink").href = data.translated_video_url;
-              document.querySelector("#originalContent .transcription-text").textContent = data.original_transcript || 'Original transcription will appear here...';
-              document.querySelector("#translatedContent .transcription-text").textContent = data.translated_transcript || 'Translated transcription will appear here...';
-              document.querySelector("#summaryContent .transcription-text").textContent = data.summary || 'Summary will appear here...';
-            }
-          } catch (err) {
-            console.error("JSON parsing error:", err);
-            showError("Error parsing server response!");
-          }
-        })
-        .catch(error => {
-          console.error("🚨 Error:", error);
-          showError("Error in processing!");
-        });
+fetch("/", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: new URLSearchParams({
+    "youtube_url": youtubeUrl,
+    "video_language": videoLanguage,
+    "subtitle_language": subtitleLanguage
+  })
+})
+.then(response => {
+  console.log("Raw response status:", response.status);
+  console.log("Response headers:", response.headers.get("Content-Type"));
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  return response.text();  // Get raw text
+})
+.then(text => {
+  console.log("Raw response text:", text);
+  try {
+    const data = JSON.parse(text);
+    console.log("✅ Parsed Response:", data);
+    if (data.error) {
+      showError(data.error);
+    } else {
+      processingStep.textContent = "✅ Video processed successfully!";
+      document.getElementById("originalVideo").querySelector("source").src = data.original_video_url;
+      document.getElementById("originalVideo").load();
+      document.getElementById("translatedVideo").querySelector("source").src = data.translated_video_url;
+      document.getElementById("translatedVideo").load();
+      document.getElementById("originalVideo").style.display = "block";
+      document.getElementById("translatedVideo").style.display = "block";
+      document.getElementById("downloadLink").href = data.translated_video_url;
+      document.querySelector("#originalContent .transcription-text").textContent = data.original_transcript || 'Original transcription will appear here...';
+      document.querySelector("#translatedContent .transcription-text").textContent = data.translated_transcript || 'Translated transcription will appear here...';
+      document.querySelector("#summaryContent .transcription-text").textContent = data.summary || 'Summary will appear here...';
+    }
+  } catch (err) {
+    console.error("JSON parsing error:", err);
+    showError(`Error parsing server response: ${text}`);
+  }
+})
+.catch(error => {
+  console.error("🚨 Fetch Error:", error);
+  showError(`Error in processing: ${error.message}`);
+});
       });
     });
 </script>
