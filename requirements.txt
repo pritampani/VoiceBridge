@@ -43,3 +43,9 @@ websockets
 matplotlib
 jsonpointer
 pydub
+flask
+flask_cors
+werkzeug.utils
+ffmpeg
+assemblyai
+gtts
