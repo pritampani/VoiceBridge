@@ -8,7 +8,7 @@ import uuid
 import logging
 from pydub import AudioSegment
 # Set ffmpeg path globally for pydub
-ffmpeg_path = r"C:\coding\python\INFOSYS\Speech-to-speech streaming\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+ffmpeg_path = "ffmpeg.exe"
 os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_path)
 AudioSegment.converter = ffmpeg_path
 from inaSpeechSegmenter import Segmenter
@@ -65,7 +65,7 @@ SUPPORTED_LANGUAGES = {
 
 app = Flask(__name__)
 CORS(app)
-app.config['UPLOAD_FOLDER'] = os.path.join("c:/coding/python/INFOSYS/Speech-to-speech streaming/FlaskUI", "uploads")
+app.config['UPLOAD_FOLDER'] = "uploads"
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -94,7 +94,7 @@ def download_youtube_video(URL, output_folder=None):
         return None
 
 def extract_audio(video_path, audio_path):
-    ffmpeg_path = r"C:\coding\python\INFOSYS\Speech-to-speech streaming\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+    ffmpeg_path = "ffmpeg.exe"
     command = [
         ffmpeg_path,
         '-i', video_path,
@@ -110,7 +110,7 @@ def extract_audio(video_path, audio_path):
 
 # ----- Step 2: Speech Segmentation using inaSpeechSegmenter -----
 def get_speech_segments(audio_path):
-    ffmpeg_bin = r"C:\coding\python\INFOSYS\Speech-to-speech streaming\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+    ffmpeg_bin = "ffmpeg.exe"
     if not os.path.exists(ffmpeg_bin):
         raise Exception(f"ffmpeg binary not found at {ffmpeg_bin}")
     ffmpeg_dir = os.path.dirname(ffmpeg_bin)
@@ -183,7 +183,7 @@ def translate_text(text, target_language):
 
 def embed_subtitles(video_path, subtitle_file_path, output_path):
     try:
-        ffmpeg_path = r"C:\coding\python\INFOSYS\Speech-to-speech streaming\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+        ffmpeg_path = "ffmpeg.exe"
         normalized_path = os.path.normpath(subtitle_file_path).replace("\\", "/")
         escaped_subtitle_path = normalized_path.replace(":", "\\:")
         subtitles_filter = f"subtitles='{escaped_subtitle_path}':force_style='Fontsize=24,FontName=Arial'"
@@ -266,7 +266,7 @@ def text_to_speech(text, output_file, language_code):
         raise
 
 def tune_audio(input_file, output_file, pitch_factor=1.0, tempo_factor=1.0):
-    ffmpeg_path = r"C:\coding\python\INFOSYS\Speech-to-speech streaming\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+    ffmpeg_path = "ffmpeg.exe"
     command = [
         ffmpeg_path,
         '-i', input_file,
@@ -281,7 +281,7 @@ def tune_audio(input_file, output_file, pitch_factor=1.0, tempo_factor=1.0):
         raise
 
 def replace_audio_in_video(video_with_subtitles, audio_path, final_output_path):
-    ffmpeg_path = r"C:\coding\python\INFOSYS\Speech-to-speech streaming\FlaskUI\ffmpeg\ffmpeg-n5.1-latest-win64-gpl-shared-5.1\bin\ffmpeg.exe"
+    ffmpeg_path = "ffmpeg.exe"
     command = [
         ffmpeg_path,
         '-i', video_with_subtitles,
