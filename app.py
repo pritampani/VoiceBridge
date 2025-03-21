@@ -64,7 +64,7 @@ SUPPORTED_LANGUAGES = {
 
 app = Flask(__name__)
 CORS(app)
-app.config['UPLOAD_FOLDER'] = r'C:\Users\HP\Downloads\FlaskUI\FlaskUI\uploads'
+app.config['UPLOAD_FOLDER'] = r'uploads'
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
