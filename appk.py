@@ -239,8 +239,10 @@ def index():
             subtitle_text = translate_text(transcript, subtitle_language)
             summary = generate_summary(translated_text)
 
+            # Fix: Define split_text separately
+            split_text = [s.strip() for s in translated_text.split('.') if s.strip()]
             segments_with_text = (
-                [(segments[i], split_text[i] + ".") for i in range(min(len(segments), len(split_text := [s.strip() for s in translated_text.split('.') if s.strip()])))]
+                [(segments[i], split_text[i] + ".") for i in range(min(len(segments), len(split_text)))]
                 if segments else [((0, get_video_duration(video_save_path) or 90), translated_text)]
             )
             overlay_tts_on_audio(audio_path, segments_with_text, video_language, mixed_audio_path)
@@ -276,20 +278,6 @@ def index():
             return jsonify({"error": str(e)}), 500
 
     return render_template("index.html", project=project_data, supported_languages=SUPPORTED_LANGUAGES)
-
-@app.route("/progress")
-def progress():
-    def generate():
-        last_progress = 0
-        while True:
-            current_progress = app.config.get('current_progress', 0)
-            if current_progress != last_progress:
-                yield f"data: {current_progress}\n\n"
-                last_progress = current_progress
-            if current_progress >= 100:
-                break
-            time.sleep(0.5)
-    return Response(generate(), content_type='text/event-stream')
 
 @app.route('/uploaded_file/<filename>')
 def uploaded_file(filename):
