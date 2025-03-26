@@ -637,6 +637,7 @@ def download_youtube_video(URL, output_folder=None):
         ydl_opts = {
             'format': 'best',
             'outtmpl': output_template,
+            'cookiefile': 'cookies.txt',  
             'quiet': False,
             'no_warnings': False,
         }
