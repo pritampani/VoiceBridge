@@ -148,6 +148,33 @@
         }
       </script>
 
+      <!-- Add your custom CSS below -->
+
+      <style>
+        .translate-icon {
+          width: 32px; /* Adjust size */
+          height: 32px;
+          cursor: pointer;
+        }
+        #google_translate_element.hidden {
+          display: none;
+        }
+      </style>
+      
+      <style>
+        /* Ensure the Google Translate dropdown appears above other elements */
+        .goog-te-menu-frame {
+          z-index: 9999 !important;
+          position: relative !important;
+        }
+        
+        /* Adjust header position when Google Translate toolbar is active */
+        html.translated-ltr header,
+        html.translated-rtl header {
+          top: 40px; /* Adjust this value based on the height of the Google toolbar */
+        }
+      </style>
+
       <!-- Utilities and Components -->
       <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"></script>
       <script defer src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.45.1/apexcharts.min.js"></script>
@@ -365,15 +392,45 @@
       </a>
 
       <!-- Header -->
-      <header class="relative z-50 bg-white dark:bg-gray-900">
-        <!-- Header content goes here -->
+      <header class="fixed top-0 left-0 w-full z-50 bg-white dark:bg-gray-900 flex items-center justify-between p-4">
+        <!-- VoiceBridge Branding -->
+        <div class="flex-shrink-0">
+          <span class="text-2xl font-bold text-gray-900 dark:text-white">VoiceBridge</span>
+        </div>
+        <!-- Navigation Menu -->
+        <nav class="hidden md:flex space-x-4">
+          <a href="#hero" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+          <a href="#features" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Features</a>
+          <a href="#languageSelector" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Languages</a>
+          <a href="#videoProcessor" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Upload</a>
+          <a href="#howItWorks" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">How It Works</a>
+          <a href="#faq" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
+        </nav>
+        <!-- Google Translate Widget with Small Icon -->
+        <div class="ml-auto flex items-center">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png" 
+               alt="Translate" class="translate-icon cursor-pointer" 
+               onclick="toggleTranslateWidget()">
+          <div id="google_translate_element" class="hidden"></div>
+        </div>
+
       </header>
 
-      <!-- Main content area -->
-      <main id="main-content" class="flex-1 relative ">
-        <!-- Content will be injected here -->
-      </main>
+      <!-- Include the Google Translate scripts just after the header if preferred -->
+      <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'hi,bn,te,mr,ta,gu,kn,ml,ur,en,es,fr,de,zh-CN,ru,ja,ar,pt,it,ko',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          }, 'google_translate_element');
+        }
+      </script>
+      <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>      
 
+      <main class="pt-20">
+        <!-- Your main content here -->
+      </main>      
       <!-- {bodyScripts} -->
 
    </body>
@@ -381,25 +438,6 @@
 
 <htmlCode>
 <div id="root">
-  <nav id="navbar" class="fixed w-full z-50 bg-neutral-900/95 backdrop-blur-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <!-- Logo -->
-        <div class="flex-shrink-0">
-          <span class="text-2xl font-bold text-white">LangStream</span>
-        </div>
-
-        <!-- Desktop Menu -->
-        <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <a href="#hero" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-            <a href="#features" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Features</a>
-            <a href="#languageSelector" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Languages</a>
-            <a href="#videoProcessor" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Upload</a>
-            <a href="#howItWorks" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">How It Works</a>
-            <a href="#faq" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
-          </div>
-        </div>
 
         <!-- Mobile menu button -->
         <div class="md:hidden">
@@ -410,8 +448,6 @@
             </svg>
           </button>
         </div>
-      </div>
-    </div>
 
     <!-- Mobile menu -->
     <div class="mobile-menu hidden md:hidden">
@@ -424,7 +460,6 @@
         <a href="#faq" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
       </div>
     </div>
-  </nav>
 
   <script>
     // Hamburger menu functionality
@@ -871,52 +906,50 @@
         processingStep.textContent = "Starting video processing...";
         setupProgressTracking();
     
-fetch("/", {
-  method: "POST",
-  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  body: new URLSearchParams({
-    "youtube_url": youtubeUrl,
-    "video_language": videoLanguage,
-    "subtitle_language": subtitleLanguage
-  })
-})
-.then(response => {
-  console.log("Raw response status:", response.status);
-  console.log("Response headers:", response.headers.get("Content-Type"));
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
-  }
-  return response.text();  // Get raw text
-})
-.then(text => {
-  console.log("Raw response text:", text);
-  try {
-    const data = JSON.parse(text);
-    console.log("✅ Parsed Response:", data);
-    if (data.error) {
-      showError(data.error);
-    } else {
-      processingStep.textContent = "✅ Video processed successfully!";
-      document.getElementById("originalVideo").querySelector("source").src = data.original_video_url;
-      document.getElementById("originalVideo").load();
-      document.getElementById("translatedVideo").querySelector("source").src = data.translated_video_url;
-      document.getElementById("translatedVideo").load();
-      document.getElementById("originalVideo").style.display = "block";
-      document.getElementById("translatedVideo").style.display = "block";
-      document.getElementById("downloadLink").href = data.translated_video_url;
-      document.querySelector("#originalContent .transcription-text").textContent = data.original_transcript || 'Original transcription will appear here...';
-      document.querySelector("#translatedContent .transcription-text").textContent = data.translated_transcript || 'Translated transcription will appear here...';
-      document.querySelector("#summaryContent .transcription-text").textContent = data.summary || 'Summary will appear here...';
-    }
-  } catch (err) {
-    console.error("JSON parsing error:", err);
-    showError(`Error parsing server response: ${text}`);
-  }
-})
-.catch(error => {
-  console.error("🚨 Fetch Error:", error);
-  showError(`Error in processing: ${error.message}`);
-});
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            "youtube_url": youtubeUrl,
+            "video_language": videoLanguage,
+            "subtitle_language": subtitleLanguage
+          })
+        })
+        .then(response => {
+          console.log("Raw response status:", response.status);
+          return response.text();  // get raw text
+        })
+        .then(text => {
+          console.log("Raw response text:", text);
+          // Try to parse JSON manually
+          try {
+            const data = JSON.parse(text);
+            console.log("✅ Parsed Response:", data);
+            if (data.error) {
+              showError(data.error);
+            } else {
+              processingStep.textContent = "✅ Video processed successfully!";
+              // Update the page with the returned data
+              document.getElementById("originalVideo").querySelector("source").src = data.original_video_url;
+              document.getElementById("originalVideo").load();
+              document.getElementById("translatedVideo").querySelector("source").src = data.translated_video_url;
+              document.getElementById("translatedVideo").load();
+              document.getElementById("originalVideo").style.display = "block";
+              document.getElementById("translatedVideo").style.display = "block";
+              document.getElementById("downloadLink").href = data.translated_video_url;
+              document.querySelector("#originalContent .transcription-text").textContent = data.original_transcript || 'Original transcription will appear here...';
+              document.querySelector("#translatedContent .transcription-text").textContent = data.translated_transcript || 'Translated transcription will appear here...';
+              document.querySelector("#summaryContent .transcription-text").textContent = data.summary || 'Summary will appear here...';
+            }
+          } catch (err) {
+            console.error("JSON parsing error:", err);
+            showError("Error parsing server response!");
+          }
+        })
+        .catch(error => {
+          console.error("🚨 Error:", error);
+          showError("Error in processing!");
+        });
       });
     });
 </script>
@@ -1236,7 +1269,7 @@ fetch("/", {
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Company Info -->
         <div class="col-span-1 md:col-span-2">
-          <h3 class="text-2xl font-bold mb-4">LangStream</h3>
+          
           <p class="text-gray-400 mb-4">Breaking language barriers through AI-powered video translation.</p>
           <div class="flex space-x-4">
             <a href="#" class="text-gray-400 hover:text-white transition-colors">
@@ -1280,7 +1313,7 @@ fetch("/", {
               <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
-              support@langstream.com
+              support@VoiceBridge.com
             </li>
             <li class="flex items-center">
               <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1295,7 +1328,7 @@ fetch("/", {
 
       <div class="mt-12 pt-8 border-t border-neutral-800">
         <div class="text-center text-gray-400 text-sm">
-          <p>&copy; 2024 LangStream. All rights reserved.</p>
+          <p>&copy; 2024 VoiceBridge. All rights reserved.</p>
         </div>
       </div>
     </div>
@@ -1306,6 +1339,14 @@ fetch("/", {
             <script>
                 console.log('Page complete');
             </script>
+
+            <script>
+              function toggleTranslateWidget() {
+                const widget = document.getElementById('google_translate_element');
+                widget.classList.toggle('hidden');
+              }
+            </script>
+            
             </body>
             </html>
           
