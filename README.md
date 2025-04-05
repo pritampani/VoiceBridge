@@ -1,10 +1,10 @@
-# Flask Video Processing Application
+# VoiceBridge: AI-Powered Speech-to-Speech Translation for Accessible Education
 
 ## Overview
 This Flask application transforms YouTube videos through a pipeline that includes:
 - Downloading videos using `yt_dlp`
 - Extracting audio via `FFmpeg`
-- Transcribing audio using `AssemblyAI`
+- Transcribing audio using `whisper AI`
 - Translating transcripts into two languages (one for audio, one for subtitles) using `LangChain` and `ChatGoogleGenerativeAI`
 - Generating subtitles in `VTT` format
 - Converting translated text to speech using `gTTS`
@@ -81,11 +81,12 @@ The final output is a video with new audio and embedded subtitles, accessible vi
 | `/uploaded_file/<filename>` | GET | Serves processed files (videos, subtitles) |
 
 ## Future Improvements
+- Sign Language Integration
+- Browser Extension
 - Improved error handling and logging
 - Asynchronous processing with `Celery`
 - Enhanced subtitle styling and segmentation
 - More natural speech synthesis options
-- Support for additional languages and file formats
 
 ## Contributing
 Contributions are welcome! To contribute:
@@ -101,7 +102,7 @@ This project is licensed under the MIT License.
 ## Acknowledgements
 - [yt_dlp](https://github.com/yt-dlp/yt-dlp)
 - [FFmpeg](https://ffmpeg.org/documentation.html)
-- [AssemblyAI](https://www.assemblyai.com/docs/)
+- [whisper AI](https://www.whisperai.com/docs/)
 - [LangChain](https://python.langchain.com/docs/)
 - [gTTS](https://pypi.org/project/gTTS/)
 - [Flask](https://flask.palletsprojects.com/)
