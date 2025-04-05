@@ -102,7 +102,7 @@ This project is licensed under the MIT License.
 ## Acknowledgements
 - [yt_dlp](https://github.com/yt-dlp/yt-dlp)
 - [FFmpeg](https://ffmpeg.org/documentation.html)
-- [whisper AI](https://www.whisperai.com/docs/)
+- [whisper AI](https://openai.com/index/whisper/)
 - [LangChain](https://python.langchain.com/docs/)
 - [gTTS](https://pypi.org/project/gTTS/)
 - [Flask](https://flask.palletsprojects.com/)
