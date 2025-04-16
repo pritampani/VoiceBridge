@@ -1,4 +1,4 @@
-# VoiceBridge: AI-Powered Speech-to-Speech Translation for Accessible Education
+# 🗣️🌐 VoiceBridge: AI-Powered Speech-to-Speech Translation for Accessible Education
 
 ## Overview
 This Flask application transforms YouTube videos through a pipeline that includes:
