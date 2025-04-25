@@ -101,8 +101,10 @@ Contributions are welcome! To contribute:
 4. Push to your branch (`git push origin feature-name`).
 5. Open a pull request.
 
-## License
-This project is licensed under the MIT License.
+## Initial Contributers:
+1. Pritam Pani
+2. Swadesmita Sahoo
+3. Saquib Khan
 
 ## Acknowledgements
 - [yt_dlp](https://github.com/yt-dlp/yt-dlp)
@@ -111,4 +113,7 @@ This project is licensed under the MIT License.
 - [LangChain](https://python.langchain.com/docs/)
 - [gTTS](https://pypi.org/project/gTTS/)
 - [Flask](https://flask.palletsprojects.com/)
+
+## License
+This project is licensed under the MIT License.
 
