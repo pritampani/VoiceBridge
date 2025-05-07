@@ -117,3 +117,10 @@ Contributions are welcome! To contribute:
 ## License
 This project is licensed under the MIT License.
 
+
+
+## NOTE
+project is hosted but in render it goes to sleep after some moments if you want to visit
+https://googlesolutionchallange.onrender.com
+
+
