@@ -102,9 +102,10 @@ Contributions are welcome! To contribute:
 5. Open a pull request.
 
 ## Initial Contributers:
-1. Pritam Pani
-2. Swadesmita Sahoo
-3. Saquib Khan
+1. [Pritam Pani](https://github.com/pritampani)
+2. [Saquib Khan](https://github.com/saquib5005)
+3. [Swadesmita Sahoo](https://github.com/Swadesmita)
+   
 
 ## Acknowledgements
 - [yt_dlp](https://github.com/yt-dlp/yt-dlp)
