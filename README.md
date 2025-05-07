@@ -121,7 +121,7 @@ This project is licensed under the MIT License.
 
 
 ## NOTE
-project is hosted but in render it goes to sleep after some moments if you want to visit
-https://googlesolutionchallange.onrender.com
+The product is hosted, but in render it goes to sleep after some moments. 
+If you want to visit and try -> https://googlesolutionchallange.onrender.com
 
 
